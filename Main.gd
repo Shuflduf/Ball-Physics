@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 		ball.velocity.y -= delta * gravity
 		
 		
-		if ball.position.y - ball.radius < plane_depth:
+		if ball.position.y - ball.radius + ball.velocity.y < plane_depth:
 			ball.velocity.y *= -damping
 			
 		ball.position += ball.velocity
@@ -30,6 +30,6 @@ func create_ball(pos):
 	balls.add_child(new_ball)
 
 
-func _on_area_3d_input_event(_camera: Node, event: InputEvent, position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+func _on_area_3d_input_event(_camera: Node, event: InputEvent, input_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event.is_action_pressed("left_click"):
-		print(event.position)
+		create_ball(input_position + Vector3(0, 10, 0))

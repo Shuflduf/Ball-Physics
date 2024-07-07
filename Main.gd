@@ -18,6 +18,8 @@ func _process(delta: float) -> void:
 		ball.velocity.y -= delta * gravity
 		
 		ball.position += ball.velocity
+		if ball.position.y + ball.radius < plane_depth:
+			ball.velocity.y *= -1.0
 		
 
 func create_ball(pos):

@@ -54,8 +54,12 @@ func report_collision(first_ball: Ball, second_ball: Ball):
 		 - (second_ball.position + second_ball.velocity)
 	
 	impulse = impulse.normalized()
+	#impulse *= damping
 	
 	print(impulse)
 	
 	first_ball.velocity *= -impulse
 	second_ball.velocity *= impulse
+	
+	first_ball.velocity += impulse * Vector3(1, 0, 1)
+	second_ball.velocity += -impulse * Vector3(1, 0, 1)

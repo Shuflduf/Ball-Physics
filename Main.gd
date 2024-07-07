@@ -30,6 +30,8 @@ func _process(delta: float) -> void:
 			if other_ball == ball:
 				continue
 			if (ball.position - other_ball.position).length() < ball.radius + other_ball.radius:
+				#all_balls.erase(ball)
+				#all_balls.erase(other_ball)
 				report_collision(ball, other_ball)
 		
 		ball.position += ball.velocity * delta
@@ -55,5 +57,5 @@ func report_collision(first_ball: Ball, second_ball: Ball):
 	
 	print(impulse)
 	
-	first_ball.velocity += impulse
-	second_ball.velocity -= impulse
+	first_ball.velocity *= impulse
+	second_ball.velocity *= impulse

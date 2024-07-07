@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://8slo0u5hen5n"]
+[gd_scene load_steps=10 format=3 uid="uid://8slo0u5hen5n"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_rcs4q"]
 [ext_resource type="PackedScene" uid="uid://d3vcqdfqokp61" path="res://ball.tscn" id="2_mojqi"]
@@ -23,6 +23,8 @@ uv1_triplanar = true
 [sub_resource type="PlaneMesh" id="PlaneMesh_mpw5e"]
 size = Vector2(1000, 1000)
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_k6by4"]
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_rcs4q")
 ball_scene = ExtResource("2_mojqi")
@@ -42,9 +44,16 @@ shadow_enabled = true
 [node name="Ball" parent="Balls" instance=ExtResource("2_mojqi")]
 
 [node name="Plane" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 material_override = SubResource("StandardMaterial3D_s3k73")
 mesh = SubResource("PlaneMesh_mpw5e")
 
+[node name="Area3D" type="Area3D" parent="Plane"]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane/Area3D"]
+shape = SubResource("WorldBoundaryShape3D_k6by4")
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.980067, 0.198667, 0, -0.198667, 0.980067, 0, 0.777674, 18.4531)
+
+[connection signal="input_event" from="Plane/Area3D" to="." method="_on_area_3d_input_event"]

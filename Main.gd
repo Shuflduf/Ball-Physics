@@ -18,12 +18,18 @@ func _process(delta: float) -> void:
 	for ball: Ball in balls.get_children():
 		ball.velocity.y -= delta * gravity
 		
-		ball.position += ball.velocity
+		
 		if ball.position.y - ball.radius < plane_depth:
 			ball.velocity.y *= -damping
-		
+			
+		ball.position += ball.velocity
 
 func create_ball(pos):
 	var new_ball: Node3D = ball_scene.instantiate()
 	new_ball.position = pos
 	balls.add_child(new_ball)
+
+
+func _on_area_3d_input_event(_camera: Node, event: InputEvent, position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if event.is_action_pressed("left_click"):
+		print(event.position)

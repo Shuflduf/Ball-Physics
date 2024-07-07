@@ -7,6 +7,7 @@ extends Node3D
 @export var plane_depth: int
 
 @export var gravity: float
+@export_range(0, 1, 0.1) var damping: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,8 +19,8 @@ func _process(delta: float) -> void:
 		ball.velocity.y -= delta * gravity
 		
 		ball.position += ball.velocity
-		if ball.position.y + ball.radius < plane_depth:
-			ball.velocity.y *= -1.0
+		if ball.position.y - ball.radius < plane_depth:
+			ball.velocity.y *= -damping
 		
 
 func create_ball(pos):

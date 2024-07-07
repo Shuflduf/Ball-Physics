@@ -43,6 +43,7 @@ func create_ball(pos):
 	var new_ball: Ball = ball_scene.instantiate()
 	new_ball.position = pos + Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1))
 	new_ball.set_radius(ui.radius)
+	new_ball.position.y += new_ball.radius
 	balls.add_child(new_ball)
 
 

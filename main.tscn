@@ -1,13 +1,47 @@
-[gd_scene load_steps=3 format=3 uid="uid://8slo0u5hen5n"]
+[gd_scene load_steps=9 format=3 uid="uid://8slo0u5hen5n"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_rcs4q"]
+[ext_resource type="PackedScene" uid="uid://d3vcqdfqokp61" path="res://ball.tscn" id="2_mojqi"]
+[ext_resource type="Texture2D" uid="uid://b4q6cukei0dix" path="res://textures/texture_01.png" id="3_5mbnu"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_kjg16"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5sggn"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_y5ixr"]
+sky_material = SubResource("ProceduralSkyMaterial_5sggn")
+
+[sub_resource type="Environment" id="Environment_12320"]
+background_mode = 2
+sky = SubResource("Sky_y5ixr")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s3k73"]
+albedo_texture = ExtResource("3_5mbnu")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mpw5e"]
+size = Vector2(1000, 1000)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_rcs4q")
+ball_scene = ExtResource("2_mojqi")
+plane_depth = -10
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_12320")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
 
 [node name="Balls" type="Node3D" parent="."]
 
-[node name="Ball" type="MeshInstance3D" parent="Balls"]
-mesh = SubResource("SphereMesh_kjg16")
+[node name="Ball" parent="Balls" instance=ExtResource("2_mojqi")]
+
+[node name="Plane" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_s3k73")
+mesh = SubResource("PlaneMesh_mpw5e")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.980067, 0.198667, 0, -0.198667, 0.980067, 0, 0.777674, 7.28982)

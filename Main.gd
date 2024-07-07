@@ -18,6 +18,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var all_balls = balls.get_children()
+	var checked_balls = []
 	
 	for ball: Ball in all_balls:
 		ball.force += ball.mass * Vector3(0, GRAVITY, 0)
@@ -27,11 +28,10 @@ func _process(delta: float) -> void:
 			ball.velocity.y *= -damping
 			
 		for other_ball: Ball in all_balls:
-			if other_ball == ball:
+			if other_ball == ball and other_ball not in checked_balls:
 				continue
 			if (ball.position - other_ball.position).length() < ball.radius + other_ball.radius:
-				#all_balls.erase(ball)
-				#all_balls.erase(other_ball)
+				checked_balls.push_back(ball)
 				report_collision(ball, other_ball)
 		
 		ball.position += ball.velocity * delta
@@ -57,5 +57,5 @@ func report_collision(first_ball: Ball, second_ball: Ball):
 	
 	print(impulse)
 	
-	first_ball.velocity *= impulse
+	first_ball.velocity *= -impulse
 	second_ball.velocity *= impulse

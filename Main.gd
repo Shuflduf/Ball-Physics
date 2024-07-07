@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var balls: Node3D = $Balls
 @onready var plane: MeshInstance3D = $Plane
+@onready var ui: Control = $UI
 
 @export var ball_scene: PackedScene
 @export var plane_depth: int
@@ -39,12 +40,13 @@ func _process(delta: float) -> void:
 		ball.force = Vector3.ZERO	
 
 func create_ball(pos):
-	var new_ball: Node3D = ball_scene.instantiate()
-	new_ball.position = pos
+	var new_ball: Ball = ball_scene.instantiate()
+	new_ball.position = pos + Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1))
+	new_ball.set_radius(ui.radius)
 	balls.add_child(new_ball)
 
 
-func _on_area_3d_input_event(_c, event, input_position, _n, _s) -> void:
+func _on_area_3d_input_event(_c, event: InputEvent, input_position, _n, _s) -> void:
 	if event.is_action_pressed("left_click"):
 		create_ball(input_position + Vector3(0, 5, 0))
 
@@ -54,12 +56,10 @@ func report_collision(first_ball: Ball, second_ball: Ball):
 		 - (second_ball.position + second_ball.velocity)
 	
 	impulse = impulse.normalized()
-	#impulse *= damping
-	
-	print(impulse)
 	
 	first_ball.velocity *= -impulse
 	second_ball.velocity *= impulse
 	
 	first_ball.velocity += impulse * Vector3(1, 0, 1)
 	second_ball.velocity += -impulse * Vector3(1, 0, 1)
+

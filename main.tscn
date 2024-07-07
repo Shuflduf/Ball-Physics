@@ -1,12 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://8slo0u5hen5n"]
+[gd_scene load_steps=11 format=3 uid="uid://8slo0u5hen5n"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_rcs4q"]
 [ext_resource type="PackedScene" uid="uid://d3vcqdfqokp61" path="res://ball.tscn" id="2_mojqi"]
 [ext_resource type="Texture2D" uid="uid://b4q6cukei0dix" path="res://textures/texture_01.png" id="3_5mbnu"]
+[ext_resource type="PackedScene" uid="uid://dm0f4r0q0xxi0" path="res://ui.tscn" id="4_gkpw7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5sggn"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_bottom_color = Color(0.2, 0.2, 0.2, 1)
 
 [sub_resource type="Sky" id="Sky_y5ixr"]
 sky_material = SubResource("ProceduralSkyMaterial_5sggn")
@@ -48,6 +48,7 @@ material_override = SubResource("StandardMaterial3D_s3k73")
 mesh = SubResource("PlaneMesh_mpw5e")
 
 [node name="Area3D" type="Area3D" parent="Plane"]
+input_capture_on_drag = true
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Plane/Area3D"]
@@ -55,5 +56,7 @@ shape = SubResource("WorldBoundaryShape3D_k6by4")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.980067, 0.198667, 0, -0.198667, 0.980067, 0, 0.777674, 18.4531)
+
+[node name="UI" parent="." instance=ExtResource("4_gkpw7")]
 
 [connection signal="input_event" from="Plane/Area3D" to="." method="_on_area_3d_input_event"]

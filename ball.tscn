@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://ball.gd" id="1_7gxaa"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_kjg16"]
+[sub_resource type="SphereMesh" id="SphereMesh_a87u0"]
 
 [node name="Ball" type="MeshInstance3D"]
-mesh = SubResource("SphereMesh_kjg16")
+mesh = SubResource("SphereMesh_a87u0")
 script = ExtResource("1_7gxaa")

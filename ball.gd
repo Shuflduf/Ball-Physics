@@ -7,6 +7,12 @@ var mass = 1.0
 
 var radius = 0.5
 
-func _ready() -> void:
-	mesh.set_radius(radius)
-	mesh.set_height(radius * 2)
+func set_radius(new_radius):
+	var new_mesh = SphereMesh.new()
+	new_mesh.radius = new_radius
+	new_mesh.height = new_radius * 2
+	radius = new_radius
+	
+	mesh = new_mesh
+
+	

@@ -29,8 +29,8 @@ size = Vector2(1000, 1000)
 script = ExtResource("1_rcs4q")
 ball_scene = ExtResource("2_mojqi")
 plane_depth = -10
-gravity = 0.1
-damping = 0.9
+damping = 0.8
+friction = 0.97
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_12320")
